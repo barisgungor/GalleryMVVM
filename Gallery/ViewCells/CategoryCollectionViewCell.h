@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CategoryCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic) CategoryModel *category;
-
+@property (nonatomic) BOOL loadingDataInformationCell;
 
 @end
 

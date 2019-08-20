@@ -7,3 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CategoryItemModel.h"
+@implementation CategoryItemModel
+
++ (BOOL)propertyIsOptional:(NSString *)propertyName {
+    return YES;
+}
+
+@end

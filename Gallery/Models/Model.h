@@ -6,8 +6,8 @@
 //  Copyright © 2019 Barış Güngör. All rights reserved.
 //
 
-#ifndef Model_h
-#define Model_h
 
 
-#endif /* Model_h */
+#import "CategoryModel.h"
+#import "CategoryItemModel.h"
+

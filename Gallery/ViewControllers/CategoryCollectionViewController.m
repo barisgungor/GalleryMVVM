@@ -7,8 +7,17 @@
 //
 
 #import "CategoryCollectionViewController.h"
+#import "ImageItemCollectionViewCell.h"
+#import "CategoryCollectionViewDataSource.h"
+#import "PreviewViewController.h"
+#import "JGProgressHUD.h"
+#import <UIKit/UIKit.h>
 
 @interface CategoryCollectionViewController ()
+
+@property (weak, nonatomic) IBOutlet UICollectionView *categoryViewCollection;
+@property (nonatomic) IBOutlet CategoryCollectionViewDataSource *dataSource;
+@property (weak, nonatomic) IBOutlet UILabel *pageTitle;
 
 @end
 
@@ -16,17 +25,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.pageTitle.text = _category.categoryName;
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    
+    CategoryItemModel *item = [self.dataSource categoryAtIndexPath:indexPath];
+    
+    PreviewViewController *previewVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PreviewViewController"];
+    previewVC.item = item;
+    [self presentViewController:previewVC animated:YES completion:nil];
+    
+    NSLog(@"%@", item);
+//    [self performSegueWithIdentifier:@"showPreviewViewControllerFromCategoryCollectionViewController" sender:item];
+    
 }
-*/
+
+- (IBAction)backButton:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    
+//    if([segue.identifier isEqualToString:@"showPreviewViewControllerFromCategoryCollectionViewController"]){
+//
+//        PreviewViewController *infoVcDataSource = (PreviewViewController *)
+//        segue.destinationViewController;
+//        infoVcDataSource.item = sender;
+//
+//    }
+}
+
 
 @end

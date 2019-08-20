@@ -16,7 +16,6 @@
 //category / categories
 
 - (instancetype)init;
-
 - (CategoryModel *)categoryAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

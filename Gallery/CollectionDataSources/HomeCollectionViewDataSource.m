@@ -29,13 +29,15 @@ static  NSString * const reuseIdentifier = @"Cell";
     
     self = [super init];
     if (self) {
+        
+        
         NSError *error;
         
         CategoryModel * testModel = [[CategoryModel alloc] initWithDictionary:@{@"categoryId" : @"1", @"categoryName":@"Furniture", @"imageUrl": @"https://res-5.cloudinary.com/dwpujv6in/image/upload/c_pad,dpr_2.0,f_auto,h_930,q_auto,w_930/v1/media/catalog/product/f/d/fd1_lngchr_bh_frontlow-field-lounge-chair-tait-blush.jpg"} error:&error];
         
         CategoryModel * testModel2 = [[CategoryModel alloc] initWithDictionary:@{@"categoryId" : @"2", @"categoryName":@"Nature", @"imageUrl": @"https://images.unsplash.com/photo-1420593248178-d88870618ca0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"} error:&error];
         
-        self.categories = @[testModel, testModel2];
+        self.categories = @[testModel, testModel2]; //BURAYI GÖZLEMLE 
         
     }
     return self;
@@ -64,14 +66,31 @@ static  NSString * const reuseIdentifier = @"Cell";
     /*cell = [[CategoryCollectionViewCell alloc] initWithCategoryModel:categories[indexPath.row]];*/ // you cannot use init method for a view that is relaying on a xib / UI object, init will not attach the object with the cell, so it will cause a crash
     
     cell.category = [self.categories objectAtIndex:indexPath.row];
-    
-    return cell;
+   
+    return [self setShadowsToCell:cell];
     
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     return self.categories.count;
+}
+
+- (CategoryCollectionViewCell *)setShadowsToCell: (CategoryCollectionViewCell *)cell{
+    
+    cell.contentView.layer.cornerRadius = 2.0f;
+    cell.contentView.layer.borderWidth = 1.0f;
+    cell.contentView.layer.borderColor = [UIColor clearColor].CGColor;
+    cell.contentView.layer.masksToBounds = YES;
+    
+    cell.layer.shadowColor = [UIColor blackColor].CGColor;
+    cell.layer.shadowOffset = CGSizeMake(0, 2.0f);
+    cell.layer.shadowRadius = 2.0f;
+    cell.layer.shadowOpacity = 0.5f;
+    cell.layer.masksToBounds = NO;
+    cell.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:cell.bounds cornerRadius:cell.contentView.layer.cornerRadius].CGPath;
+    
+    return cell;
 }
 
 

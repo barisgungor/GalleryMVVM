@@ -7,10 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "CategoryItemModel.h"
+#import "ImageItemCollectionViewCell.h"
+#import "CategoryModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CategoryCollectionViewDataSource : NSObject
+@interface CategoryCollectionViewDataSource : NSObject <UICollectionViewDataSource>
+
+- (instancetype)init;
+- (CategoryItemModel *)categoryAtIndexPath: (NSIndexPath *)indexPath;
+@property (nonatomic) CategoryModel *category;
+- (void)setCategory:(CategoryModel *)category;
+
 
 @end
 

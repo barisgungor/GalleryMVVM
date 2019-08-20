@@ -7,8 +7,17 @@
 //
 
 #import "PreviewViewController.h"
-
+#import "UIImage+StackBlur.h"
+#import "CategoryCollectionViewController.h"
+#import <UIKit/UIKit.h>
+#import "JGProgressHUD.h"
 @interface PreviewViewController ()
+
+
+@property (weak, nonatomic) IBOutlet UIImageView *blurreyBackgroundImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *itemLabel;
+@property (weak, nonatomic) IBOutlet UIButton *saveImageButton;
 
 @end
 
@@ -16,17 +25,70 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.itemLabel.text = _item.categoryItemName;
+    [self.imageView setImageWithURL:[NSURL URLWithString: _item.imageItemUrl]];
+    [self.blurreyBackgroundImageView setImageWithURL:[NSURL URLWithString: _item.imageItemUrl]];
+//    [self blurBackground]; //this method slows down the process
+  //  [self.imageView setImage:[self blurImage]];
+  //  self.imageView =[[UIImageView alloc] initWithImage: test];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)blurBackground{
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: _item.imageItemUrl]]; //loading images through NSData slows down loading time
+    UIImage *image = [UIImage imageWithData:data];
+    image = [image stackBlur: 80];
+    
+    [self.blurreyBackgroundImageView setImage:image];
+    
 }
-*/
+
+
+ - (void)saveImageToGallery{
+    
+     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: _item.imageItemUrl]];
+     UIImage *image = [UIImage imageWithData:data];
+     UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+}
+
+- (void) image:(UIImage*)image didFinishSavingWithError:(NSError *)error contextInfo:(NSDictionary*)info{
+    
+    JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
+    HUD.textLabel.text = @"Downloading...";
+    [HUD showInView:self.view];
+    
+    if(!error){
+        
+        NSLog(@"WORKED");
+       
+        [HUD dismissAfterDelay:1.0];
+        
+    }else {
+        
+        NSLog(@"NOT WORKED");
+        
+    }
+    
+}
+
+- (IBAction)backAction:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+
+
+
+
+
+- (IBAction)saveImageAction:(id)sender {
+    
+    [self saveImageToGallery];
+    
+}
+
 
 @end

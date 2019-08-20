@@ -7,6 +7,8 @@
 //
 
 #import "CategoryCollectionViewCell.h"
+#import "JGProgressHUD.h"
+
 
 
 @interface CategoryCollectionViewCell ()
@@ -31,9 +33,18 @@
 - (void)setCategory:(CategoryModel *)category {
     
     _category = category;
-    [self.imageView setImageWithURL:[NSURL URLWithString:_category.imageUrl]];
+   
+   
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_category.imageUrl] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:300]; //here we used caching, so loading will be faster on other classes
+
+    [self.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        self->_imageView.image = image; //here we need to use weakself, but i'll explain it later
+    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+        
+    }];
+   
     self.categoryLabel.text = _category.categoryName;
-    
+   
 }
 
 

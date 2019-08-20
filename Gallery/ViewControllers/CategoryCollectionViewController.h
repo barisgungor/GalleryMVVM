@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CategoryModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CategoryCollectionViewController : UIViewController
+@interface CategoryCollectionViewController : UIViewController <UICollectionViewDelegate>
+
+@property (nonatomic) CategoryModel *category;
+
 
 @end
 

@@ -7,3 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Api.h"
+#import "CategoryItemModel.h"
+#import "CategoryModel.h"
+#import <AFNetworking.h>
+
+@implementation Api
+{
+    NSArray <CategoryModel *> *categories;
+    BOOL *success;
+    
+}
+
+
+@end

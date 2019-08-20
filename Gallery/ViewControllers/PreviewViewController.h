@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CategoryItemModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PreviewViewController : UIViewController
+
+@property (nonatomic) CategoryItemModel *item;
 
 @end
 

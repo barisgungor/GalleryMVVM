@@ -8,6 +8,16 @@
 
 #ifndef CategoryModel_h
 #define CategoryModel_h
+#import <JSONModel.h>
+@interface CategoryModel : JSONModel
 
+// all properties must be public, so use @property to define them in header class, you will understand better when you check jsonmodel library
+@property (nonatomic) NSString *categoryId;
+@property (nonatomic) NSString *categoryName;
+@property (nonatomic) NSString *imageUrl;
+
+
+
+@end
 
 #endif /* CategoryModel_h */
